@@ -6,8 +6,8 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Options
-option(BUILD_EXAMPLES "Build examples" OFF)
-option(BUILD_TESTS "Build tests" OFF)
+option(GELFLIB_BUILD_EXAMPLES "Build examples" OFF)
+option(GELFLIB_BUILD_TESTS "Build tests" OFF)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     find_package(Threads REQUIRED)
@@ -57,7 +57,7 @@ install(TARGETS ${PROJECT_NAME_STR} ${PROJECT_NAME_STR}static
     LIBRARY DESTINATION "${INSTALL_LIB_DIR}" )
 install(FILES ${GELFLIB_PUBLIC_HDRS} DESTINATION "${INSTALL_INC_DIR}")
 
-if(BUILD_TESTS)
+if(GELFLIB_BUILD_TESTS)
     add_subdirectory(${EXT_PROJECTS_DIR}/gtest)
 endif()
 
@@ -65,7 +65,7 @@ endif()
 # Example
 #-------------------
 
-if(BUILD_EXAMPLES)
+if(GELFLIB_BUILD_EXAMPLES)
 add_definitions(${MSVC_COMPILER_DEFS})
 set(PROJECT_EXAMPLE example)
 add_executable(${PROJECT_EXAMPLE} example/main.cpp)
@@ -83,7 +83,7 @@ endif()
 # Test
 #-------------------
 
-if(BUILD_TESTS)
+if(GELFLIB_BUILD_TESTS)
     link_directories(${PROJECT_NAME_STR}static)
 add_definitions(${MSVC_COMPILER_DEFS})
 enable_testing()
