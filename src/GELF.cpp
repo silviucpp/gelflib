@@ -33,6 +33,9 @@ static Configuration* g_pConfiguration = nullptr;
 
 bool gelf::initialize()
 {
+    if( g_pConfiguration != nullptr )
+        return true;
+
 #if defined(WIN32)
     WORD wVersionRequested;
     WSADATA wsaData;
@@ -55,7 +58,8 @@ bool gelf::initialize()
 
 void gelf::destroy()
 {
-    GELF_ASSERT( g_pConfiguration != nullptr );
+    if( g_pConfiguration == nullptr )
+        return;
 
     delete g_pConfiguration;
     g_pConfiguration = nullptr;

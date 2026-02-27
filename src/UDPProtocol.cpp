@@ -16,6 +16,12 @@
 
 bool gelf::UDPProtocol::send( const struct sockaddr_in& pSockAddr, const ChunkedData & rData )
 {
+    if( rData.m_pData == nullptr || rData.m_uSize == 0 )
+    {
+        m_strError = "Invalid data: null or empty";
+        return false;
+    }
+
     SOCKET sock;
 
     if( ( sock = socket( AF_INET, SOCK_DGRAM, 0 ) ) == -1 )

@@ -1,5 +1,5 @@
-#ifndef GLEF_LIB_DATA_HPP
-#define GLEF_LIB_DATA_HPP
+#ifndef GELF_LIB_DATA_HPP
+#define GELF_LIB_DATA_HPP
 
 #include <cinttypes>
 #include <memory>
@@ -30,7 +30,7 @@ namespace gelf
 
         Data( const Data& other ) :
             m_pData( new uint8_t[ other.m_uSize ] ),
-            m_uSize( 0 ),
+            m_uSize( other.m_uSize ),
             m_bOwnBuffer( true )
         {
             std::memcpy( m_pData, other.m_pData, other.m_uSize );
@@ -69,7 +69,11 @@ namespace gelf
                 delete[] m_pData;
             }
             m_pData = other.m_pData;
+            m_uSize = other.m_uSize;
+            m_bOwnBuffer = other.m_bOwnBuffer;
             other.m_pData = nullptr;
+            other.m_uSize = 0;
+            other.m_bOwnBuffer = false;
             return *this;
         }
     };
@@ -96,9 +100,9 @@ namespace gelf
         }
 
         ChunkedData( const ChunkedData& other ) :
-            m_uChunkSize( 0 ),
+            m_uChunkSize( other.m_uChunkSize ),
             m_pData( new uint8_t[ other.m_uSize ] ),
-            m_uSize( 0 )
+            m_uSize( other.m_uSize )
         {
             std::memcpy( m_pData, other.m_pData, other.m_uSize );
         }
@@ -131,7 +135,11 @@ namespace gelf
         {
             delete[] m_pData;
             m_pData = other.m_pData;
+            m_uSize = other.m_uSize;
+            m_uChunkSize = other.m_uChunkSize;
             other.m_pData = nullptr;
+            other.m_uSize = 0;
+            other.m_uChunkSize = 0;
             return *this;
         }
     };

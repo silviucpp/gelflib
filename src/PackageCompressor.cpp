@@ -15,5 +15,6 @@ gelf::Data gelf::PackageCompressor::compress( const gelf::Data & rData )
         return compressedData;
     }
 
+    delete[] compressedData.m_pData;
     return gelf::Data();
 }
