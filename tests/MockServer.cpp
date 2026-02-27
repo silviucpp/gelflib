@@ -18,6 +18,8 @@
 #define socket_len unsigned int
 #endif
 
+#include <cstdlib>
+
 void MockServer::start( uint16_t uPort, size_t uTargetPacketCount )
 {
     m_uTargetPacketCount = uTargetPacketCount;
