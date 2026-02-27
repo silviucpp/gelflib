@@ -197,7 +197,7 @@ const std::string& gelf::Message::getMessage() const
     return m_strMessage;
 }
 
-const uint64_t gelf::Message::getHashCode() const
+uint64_t gelf::Message::getHashCode() const
 {
     return m_uHash;
 }

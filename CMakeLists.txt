@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     find_package(Threads REQUIRED)
-    add_definitions(-Wall -fvisibility=default -ansi -Wno-deprecated -pthread -std=c++14 -Wno-sign-compare)
+    add_definitions(-Wall -Wextra -Werror -fvisibility=default -ansi -pthread -std=c++14 -Wno-sign-compare)
 endif()
 
 if(MSVC)

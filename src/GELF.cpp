@@ -86,7 +86,7 @@ const std::string& gelf::getConfiguredHost()
     return g_pConfiguration->strHost;
 }
 
-const uint16_t gelf::getConfiguredPort()
+uint16_t gelf::getConfiguredPort()
 {
     GELF_ASSERT( g_pConfiguration != nullptr );
     return g_pConfiguration->uPort;

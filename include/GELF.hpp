@@ -56,7 +56,7 @@ namespace gelf
      * Gets configured port
      * @return Returns a port
      */
-    GELFLIB_EXPORT const uint16_t getConfiguredPort();
+    GELFLIB_EXPORT uint16_t getConfiguredPort();
 }
 
 #endif //GELF_LIB_GLEF_HPP

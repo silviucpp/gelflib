@@ -53,7 +53,7 @@ namespace gelf
         /**
          * Get hash of the message
          */
-        const uint64_t getHashCode() const;
+        uint64_t getHashCode() const;
 
     private:
         Message( const std::string& strMessage, uint64_t uHash );
