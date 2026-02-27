@@ -5,6 +5,10 @@ project(${PROJECT_NAME_STR} CXX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Options
+option(BUILD_EXAMPLES "Build examples" OFF)
+option(BUILD_TESTS "Build tests" OFF)
+
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     find_package(Threads REQUIRED)
     add_definitions(-Wall -Wextra -Werror -fvisibility=default -ansi -pthread -std=c++14 -Wno-sign-compare)
@@ -37,6 +41,7 @@ target_compile_definitions(${PROJECT_NAME_STR}static PUBLIC GELF_STATIC )
 
 include_directories(${ZLIB_INCLUDE_DIR})
 include_directories(${COMMON_INCLUDES})
+include_directories(${PROJECT_SOURCE_DIR}/src)
 target_link_libraries (${PROJECT_NAME_STR} ${ZLIB_LIBRARY})
 target_compile_features(${PROJECT_NAME_STR} PRIVATE cxx_range_for)
 target_compile_features(${PROJECT_NAME_STR}static PRIVATE cxx_range_for)
@@ -52,12 +57,15 @@ install(TARGETS ${PROJECT_NAME_STR} ${PROJECT_NAME_STR}static
     LIBRARY DESTINATION "${INSTALL_LIB_DIR}" )
 install(FILES ${GELFLIB_PUBLIC_HDRS} DESTINATION "${INSTALL_INC_DIR}")
 
-add_subdirectory(${EXT_PROJECTS_DIR}/gtest)
+if(BUILD_TESTS)
+    add_subdirectory(${EXT_PROJECTS_DIR}/gtest)
+endif()
 
 #-------------------
 # Example
 #-------------------
 
+if(BUILD_EXAMPLES)
 add_definitions(${MSVC_COMPILER_DEFS})
 set(PROJECT_EXAMPLE example)
 add_executable(${PROJECT_EXAMPLE} example/main.cpp)
@@ -69,11 +77,14 @@ target_link_libraries (${PROJECT_EXAMPLE} ${ZLIB_LIBRARY})
 if(WIN32 OR MINGW)
     target_link_libraries (${PROJECT_EXAMPLE} ws2_32.lib)
 endif()
+endif()
 
 #-------------------
 # Test
 #-------------------
-link_directories(${PROJECT_NAME_STR}static)
+
+if(BUILD_TESTS)
+    link_directories(${PROJECT_NAME_STR}static)
 add_definitions(${MSVC_COMPILER_DEFS})
 enable_testing()
 set(PROJECT_TEST_NAME ${PROJECT_NAME_STR}_test)
@@ -123,5 +134,6 @@ target_link_libraries (${PROJECT_TEST_NAME} ${PROJECT_NAME_STR}static)
 
 
 add_test(test1 ${PROJECT_TEST_NAME})
+endif()
 
 
